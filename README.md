@@ -1,2 +1,4 @@
 # CCH-POO
-trabalho avaliativo da matéria de Programação Orientada a Objeto
+Trabalho avaliativo da matéria de Programação Orientada a Objeto.
+
+Alunos: Gabriel Morais Jatobá Coasto e Vinícius Almada dos Santos
