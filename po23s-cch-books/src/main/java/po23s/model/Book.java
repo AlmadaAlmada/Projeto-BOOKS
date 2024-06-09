@@ -29,6 +29,16 @@ public class Book {
         this.Valor = Valor;
         Autores = new ArrayList<>();
     }
+
+    public Book(String Titulo, ArrayList<String> Autores, String Editora, boolean DisponivelPDF, double Valor) {
+        this.Titulo = Titulo;
+        this.Autores = Autores;
+        this.Editora = Editora;
+        this.DisponivelPDF = DisponivelPDF;
+        this.Valor = Valor;
+    }
+
+   
     
     
 
@@ -70,6 +80,11 @@ public class Book {
 
     public void setValor(double Valor) {
         this.Valor = Valor;
+    }
+
+    @Override
+    public String toString() {
+        return Titulo + " - " + Autores;
     }
     
     

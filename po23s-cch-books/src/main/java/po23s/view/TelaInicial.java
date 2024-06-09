@@ -4,8 +4,10 @@
  */
 package po23s.view;
 
+import java.awt.Label;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import po23s.http.ClienteHttp;
@@ -16,7 +18,9 @@ import po23s.model.Book;
  * @author MG-11-04-23
  */
 public class TelaInicial extends javax.swing.JFrame {
-
+    
+    DefaultListModel<Book> listModel = new DefaultListModel<>();
+    
     /**
      * Creates new form NewJFrame
      */
@@ -33,7 +37,6 @@ public class TelaInicial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         CaixaBusca = new javax.swing.JTextField();
         BotaoBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -41,18 +44,16 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListaLivros = new javax.swing.JList<>();
-        label1 = new java.awt.Label();
-        label2 = new java.awt.Label();
-        label3 = new java.awt.Label();
-        label5 = new java.awt.Label();
+        RespostaTitulo = new java.awt.Label();
+        RespostaAutor = new java.awt.Label();
+        RespostaEditora = new java.awt.Label();
+        RespostaPreco = new java.awt.Label();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        label6 = new java.awt.Label();
+        RespostaPDF = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 0, 51));
-
-        jLabel1.setText("BUSCADOR DE LIVROS:");
 
         CaixaBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,30 +73,36 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jLabel3.setText("Configuraçãos de busca.");
 
-        ListaLivros.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        ListaLivros.setModel(listModel);
+        ListaLivros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ListaLivrosMousePressed(evt);
+            }
+        });
+        ListaLivros.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ListaLivrosValueChanged(evt);
+            }
         });
         jScrollPane1.setViewportView(ListaLivros);
 
-        label1.setBackground(new java.awt.Color(255, 255, 255));
-        label1.setText("Título do livro");
+        RespostaTitulo.setBackground(new java.awt.Color(255, 255, 255));
+        RespostaTitulo.setText("Título do livro");
 
-        label2.setBackground(new java.awt.Color(255, 255, 255));
-        label2.setText("autor");
+        RespostaAutor.setBackground(new java.awt.Color(255, 255, 255));
+        RespostaAutor.setText("Autor");
 
-        label3.setBackground(new java.awt.Color(255, 255, 255));
-        label3.setText("editora");
+        RespostaEditora.setBackground(new java.awt.Color(255, 255, 255));
+        RespostaEditora.setText("Editora");
 
-        label5.setBackground(new java.awt.Color(255, 255, 255));
+        RespostaPreco.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setText("Preço:");
 
         jLabel5.setText("Disponível em PDF:");
         jLabel5.setToolTipText("");
 
-        label6.setBackground(new java.awt.Color(255, 255, 255));
+        RespostaPDF.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,8 +113,9 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(CaixaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BotaoBuscar)
                         .addGap(27, 27, 27)
                         .addComponent(jLabel3)
@@ -115,29 +123,25 @@ public class TelaInicial extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CampoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RespostaTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(RespostaAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
-                        .addComponent(label3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(RespostaEditora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(RespostaPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(RespostaPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(40, 40, 40)
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CaixaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoBuscar)
@@ -147,17 +151,17 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(RespostaTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(RespostaAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RespostaEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RespostaPDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(RespostaPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -190,6 +194,9 @@ public class TelaInicial extends javax.swing.JFrame {
         String json = cliente.buscaDados(url);
         JSONObject jsonObject = new JSONObject(json);
         JSONArray itensJson = jsonObject.optJSONArray("items");
+        
+        listModel.clear();
+        
         if (itensJson != null) {
             for (int i = 0; i < itensJson.length(); i++) {
                 JSONObject item = itensJson.getJSONObject(i);
@@ -204,6 +211,8 @@ public class TelaInicial extends javax.swing.JFrame {
                     String titulo = volumeInfo.optString("title", "Título não disponível");
                     String publisher = volumeInfo.optString("publisher", "Editora não disponível");
                     String descricao = volumeInfo.optString("description", "Descrição não disponível");
+                    boolean disponivelPDF = accessInfo.optJSONObject("pdf") != null && accessInfo.optJSONObject("pdf").optBoolean("isAvailable", false);
+                    double valor = saleInfo.optJSONObject("listPrice") != null ? saleInfo.optJSONObject("listPrice").optDouble("amount", 0.0) : 0.0;
 
                     JSONArray autoresJson = volumeInfo.optJSONArray("authors");
                     if (autoresJson != null) {
@@ -211,8 +220,12 @@ public class TelaInicial extends javax.swing.JFrame {
                             autores.add(autoresJson.getString(j));
                         }
                     }
+                    Book book = new Book(titulo, (ArrayList<String>) autores, publisher, disponivelPDF, valor);
+                    listModel.addElement(book);
                 }
+              
             }
+           
         }// TODO add your handling code here:
 
         
@@ -222,6 +235,27 @@ public class TelaInicial extends javax.swing.JFrame {
     private void CaixaBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CaixaBuscaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CaixaBuscaActionPerformed
+
+    private void ListaLivrosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaLivrosValueChanged
+        
+        double valor = listModel.get(evt.getFirstIndex()).getValor();
+        
+        RespostaTitulo.setText( listModel.get(evt.getFirstIndex()).getTitulo());
+        RespostaAutor.setText(listModel.get(evt.getFirstIndex()).getAutores().toString());
+        RespostaEditora.setText( listModel.get(evt.getFirstIndex()).getEditora());
+        RespostaPreco.setText(String.format("%.2f", listModel.get(evt.getFirstIndex()).getValor()));
+        if(listModel.get(evt.getFirstIndex()).isDisponivelPDF()){
+            RespostaPDF.setText("Sim");
+        }
+        else{
+            RespostaPDF.setText("Não");
+        }
+        
+    }//GEN-LAST:event_ListaLivrosValueChanged
+
+    private void ListaLivrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaLivrosMousePressed
+        evt.toString();
+    }//GEN-LAST:event_ListaLivrosMousePressed
 
     /**
      * @param args the command line arguments
@@ -272,17 +306,16 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton BotaoBuscar;
     private javax.swing.JTextField CaixaBusca;
     private javax.swing.JTextField CampoMaximo;
-    private javax.swing.JList<String> ListaLivros;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<Book> ListaLivros;
+    private java.awt.Label RespostaAutor;
+    private java.awt.Label RespostaEditora;
+    private java.awt.Label RespostaPDF;
+    private java.awt.Label RespostaPreco;
+    private java.awt.Label RespostaTitulo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
-    private java.awt.Label label3;
-    private java.awt.Label label5;
-    private java.awt.Label label6;
     // End of variables declaration//GEN-END:variables
 }
