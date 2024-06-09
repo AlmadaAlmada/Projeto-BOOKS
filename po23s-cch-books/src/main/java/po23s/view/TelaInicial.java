@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import po23s.http.ClienteHttp;
 import po23s.model.Book;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -26,6 +28,7 @@ public class TelaInicial extends javax.swing.JFrame {
      */
     public TelaInicial() {
         initComponents();
+        ListaLivros.addListSelectionListener(new LimparSelecaoListener());
     }
 
     /**
@@ -120,40 +123,42 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(CaixaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BotaoBuscar)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CampoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RespostaPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RespostaPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(RespostaPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RespostaTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(RespostaTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 914, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(RespostaAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(RespostaEditora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(14, 14, 14))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(RespostaEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(RespostaPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(CaixaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(BotaoBuscar)
+                            .addGap(27, 27, 27)
+                            .addComponent(jLabel3)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(CampoMaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,13 +182,17 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(RespostaEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(RespostaPDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(RespostaPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel5)
+                        .addComponent(RespostaPDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(RespostaPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(4, 4, 4)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         RespostaTitulo.getAccessibleContext().setAccessibleName("");
@@ -191,12 +200,25 @@ public class TelaInicial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private class LimparSelecaoListener implements ListSelectionListener {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) {
+                ListaLivros.clearSelection();
+            }
+        }
+    }
+    
     private void BotaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscarActionPerformed
- 
+            
+            
+        listModel.clear();  
+        ListaLivros.clearSelection();
+        
         ClienteHttp cliente = new ClienteHttp();
         String busca = CaixaBusca.getText();
         int maximo;
+        
         
         try{
             maximo = Integer.parseInt(CampoMaximo.getText());
@@ -210,7 +232,7 @@ public class TelaInicial extends javax.swing.JFrame {
             maximo = 0;
         }
         
-        String url = "https://www.googleapis.com/books/v1/volumes?q=" + busca;
+        String url = "https://www.googleapis.com/books/v1/volumes?q=" + busca.replaceAll("\\s", "");
         
         if(maximo != 0){
             url = url + "&maxResults=" + maximo;
@@ -220,7 +242,6 @@ public class TelaInicial extends javax.swing.JFrame {
         JSONObject jsonObject = new JSONObject(json);
         JSONArray itensJson = jsonObject.optJSONArray("items");
         
-        listModel.clear();
         
         if (itensJson != null) {
             for (int i = 0; i < itensJson.length(); i++) {
@@ -235,7 +256,6 @@ public class TelaInicial extends javax.swing.JFrame {
 
                     String titulo = volumeInfo.optString("title", "Título não disponível");
                     String publisher = volumeInfo.optString("publisher", "Editora não disponível");
-                    String descricao = volumeInfo.optString("description", "Descrição não disponível");
                     boolean disponivelPDF = accessInfo.optJSONObject("pdf") != null && accessInfo.optJSONObject("pdf").optBoolean("isAvailable", false);
                     double valor = saleInfo.optJSONObject("listPrice") != null ? saleInfo.optJSONObject("listPrice").optDouble("amount", 0.0) : 0.0;
 
@@ -245,6 +265,12 @@ public class TelaInicial extends javax.swing.JFrame {
                             autores.add(autoresJson.getString(j));
                         }
                     }
+                    if(autores.isEmpty()){
+                          autores.add("Autores não disponíveis");
+                    }
+                             
+                    
+                    
                     Book book = new Book(titulo, (ArrayList<String>) autores, publisher, disponivelPDF, valor);
                     listModel.addElement(book);
                 }
@@ -258,23 +284,27 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoBuscarActionPerformed
 
     private void CaixaBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CaixaBuscaActionPerformed
-        // TODO add your handling code here:
+            
     }//GEN-LAST:event_CaixaBuscaActionPerformed
 
     private void ListaLivrosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaLivrosValueChanged
-        double valor = listModel.get(evt.getFirstIndex()).getValor();
         
-        RespostaTitulo.setText( listModel.get(evt.getFirstIndex()).getTitulo());
-        RespostaAutor.setText(listModel.get(evt.getFirstIndex()).getAutores().toString());
-        RespostaEditora.setText( listModel.get(evt.getFirstIndex()).getEditora());
-        RespostaPreco.setText(String.format("%.2f", listModel.get(evt.getFirstIndex()).getValor()));
-        if(listModel.get(evt.getFirstIndex()).isDisponivelPDF()){
-            RespostaPDF.setText("Sim");
+        try{
+            double valor = listModel.get(evt.getFirstIndex()).getValor();
+            RespostaTitulo.setText( listModel.get(evt.getFirstIndex()).getTitulo());
+            RespostaAutor.setText(listModel.get(evt.getFirstIndex()).getAutores().toString());
+            RespostaEditora.setText( listModel.get(evt.getFirstIndex()).getEditora());
+            RespostaPreco.setText(String.format("%.2f", listModel.get(evt.getFirstIndex()).getValor()));
+            if(listModel.get(evt.getFirstIndex()).isDisponivelPDF()){
+                RespostaPDF.setText("Sim");
+            }
+            else{
+                RespostaPDF.setText("Não");
+            }
         }
-        else{
-            RespostaPDF.setText("Não");
+        catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Valor não encontrado");
         }
-        
        
 
     }//GEN-LAST:event_ListaLivrosValueChanged
