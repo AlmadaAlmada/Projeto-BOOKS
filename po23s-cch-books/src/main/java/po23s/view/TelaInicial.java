@@ -4,10 +4,10 @@
  */
 package po23s.view;
 
-import java.awt.Label;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import po23s.http.ClienteHttp;
@@ -54,7 +54,7 @@ public class TelaInicial extends javax.swing.JFrame {
         AvisoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 0, 51));
+        setBackground(new java.awt.Color(255, 19, 19));
 
         CaixaBusca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,67 +219,76 @@ public class TelaInicial extends javax.swing.JFrame {
         try{
             maximo = Integer.parseInt(CampoMaximo.getText());
             
+            if(maximo < 0){
+            maximo = 10;
+            JOptionPane.showMessageDialog(this, "Valor negativo é inválido.\nA busca por padrão será 10.", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        
+            if(maximo > 40){
+            maximo = 40;
+            JOptionPane.showMessageDialog(this, "Valor > 40 é inválido.\nA busca por padrão será 40.", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+            
         }
         catch(NumberFormatException e){
             maximo = 0;
+            JOptionPane.showMessageDialog(this, "Valor inválido.\nA busca por padrão será 10.", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-        
-        if(maximo < 0){
-            maximo = 0;
-        }
-        
-        if(maximo > 40){
-            maximo = 40;
-        }
-        
-        String url = "https://www.googleapis.com/books/v1/volumes?q=" + busca.replaceAll("\\s", "");
-        
-        if(maximo != 0){
-            url = url + "&maxResults=" + maximo;
-        }
-        System.out.println(url);
-        String json = cliente.buscaDados(url);
-        JSONObject jsonObject = new JSONObject(json);
-        JSONArray itensJson = jsonObject.optJSONArray("items");
-        
-        
-        if (itensJson != null) {
-            for (int i = 0; i < itensJson.length(); i++) {
-                JSONObject item = itensJson.getJSONObject(i);
-                JSONObject volumeInfo = item.optJSONObject("volumeInfo");
-                JSONObject saleInfo = item.optJSONObject("saleInfo");
-                JSONObject accessInfo = item.optJSONObject("accessInfo");
-
+     
+        try{
             
-                if (volumeInfo != null) {
-                    List<String> autores = new ArrayList<>();
+            String url = "https://www.googleapis.com/books/v1/volumes?q=" + busca.replaceAll("\\s", "");
 
-                    String titulo = volumeInfo.optString("title", "Título não disponível");
-                    String publisher = volumeInfo.optString("publisher", "Editora não disponível");
-                    boolean disponivelPDF = accessInfo.optJSONObject("pdf") != null && accessInfo.optJSONObject("pdf").optBoolean("isAvailable", false);
-                    double valor = saleInfo.optJSONObject("listPrice") != null ? saleInfo.optJSONObject("listPrice").optDouble("amount", 0.0) : 0.0;
-
-                    JSONArray autoresJson = volumeInfo.optJSONArray("authors");
-                    if (autoresJson != null) {
-                        for (int j = 0; j < autoresJson.length(); j++) {
-                            autores.add(autoresJson.getString(j));
-                        }
-                    }
-                    if(autores.isEmpty()){
-                          autores.add("Autores não disponíveis");
-                    }
-                             
-                    
-                    
-                    Book book = new Book(titulo, (ArrayList<String>) autores, publisher, disponivelPDF, valor);
-                    listModel.addElement(book);
-                }
-              
+            if(maximo != 0){
+                url = url + "&maxResults=" + maximo;
             }
-           
-        }// TODO add your handling code here:
+            System.out.println(url);
+            String json = cliente.buscaDados(url);
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray itensJson = jsonObject.optJSONArray("items");
 
-        
+
+            if (itensJson != null) {
+                for (int i = 0; i < itensJson.length(); i++) {
+                    JSONObject item = itensJson.getJSONObject(i);
+                    JSONObject volumeInfo = item.optJSONObject("volumeInfo");
+                    JSONObject saleInfo = item.optJSONObject("saleInfo");
+                    JSONObject accessInfo = item.optJSONObject("accessInfo");
+
+
+                    if (volumeInfo != null) {
+                        List<String> autores = new ArrayList<>();
+
+                        String titulo = volumeInfo.optString("title", "Título não disponível");
+                        String publisher = volumeInfo.optString("publisher", "Editora não disponível");
+                        boolean disponivelPDF = accessInfo.optJSONObject("pdf") != null && accessInfo.optJSONObject("pdf").optBoolean("isAvailable", false);
+                        double valor = saleInfo.optJSONObject("listPrice") != null ? saleInfo.optJSONObject("listPrice").optDouble("amount", 0.0) : 0.0;
+
+                        JSONArray autoresJson = volumeInfo.optJSONArray("authors");
+                        if (autoresJson != null) {
+                            for (int j = 0; j < autoresJson.length(); j++) {
+                                autores.add(autoresJson.getString(j));
+                            }
+                        }
+                        if(autores.isEmpty()){
+                              autores.add("Autores não disponíveis");
+                        }
+
+
+
+                        Book book = new Book(titulo, (ArrayList<String>) autores, publisher, disponivelPDF, valor);
+                        listModel.addElement(book);
+                    }
+
+                }
+
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this, "JSon não efetuou a busca.\nPesquise novamente!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            System.out.print("testeeee");
+        }
+            
         
     }//GEN-LAST:event_BotaoBuscarActionPerformed
 
