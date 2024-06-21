@@ -226,10 +226,10 @@ public class TelaInicial extends javax.swing.JFrame {
             
             maximo = Integer.parseInt(CampoMaximo.getText());
             
-            if(maximo < 0){
+            if(maximo <= 0){
             maximo = 10;
             CampoMaximo.setText("10");  
-            JOptionPane.showMessageDialog(this, "Valor negativo é inválido.\nA busca por padrão será 10.", "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "0 ou valor negativo é inválido.\nA busca por padrão será 10.", "ERRO", JOptionPane.ERROR_MESSAGE);
             }
         
             if(maximo > 40){
