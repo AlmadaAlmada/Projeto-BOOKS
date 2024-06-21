@@ -14,6 +14,7 @@ import po23s.http.ClienteHttp;
 import po23s.model.Book;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import static org.json.JSONObject.NULL;
 
 /**
  *
@@ -215,23 +216,32 @@ public class TelaInicial extends javax.swing.JFrame {
         String busca = CaixaBusca.getText();
         int maximo;
         
+        if(CampoMaximo.getText().isEmpty()){
+            CampoMaximo.setText("10");      
+        }
+        
         
         try{
+            
+            
             maximo = Integer.parseInt(CampoMaximo.getText());
             
             if(maximo < 0){
             maximo = 10;
+            CampoMaximo.setText("10");  
             JOptionPane.showMessageDialog(this, "Valor negativo é inválido.\nA busca por padrão será 10.", "ERRO", JOptionPane.ERROR_MESSAGE);
             }
         
             if(maximo > 40){
             maximo = 40;
+            CampoMaximo.setText("40");  
             JOptionPane.showMessageDialog(this, "Valor > 40 é inválido.\nA busca por padrão será 40.", "ERRO", JOptionPane.ERROR_MESSAGE);
             }
             
         }
         catch(NumberFormatException e){
-            maximo = 0;
+            maximo = 10;
+            CampoMaximo.setText("10");  
             JOptionPane.showMessageDialog(this, "Valor inválido.\nA busca por padrão será 10.", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
      
