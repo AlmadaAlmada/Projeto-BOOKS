@@ -26,8 +26,8 @@ Tecnologias Utilizadas:
 
 Contribuidores:
 
-Gabriel Morais Jatobá Coasto - Desenvolvimento
-Vinícius Almada dos Santos - Desenvolvimento
+- Gabriel Morais Jatobá Coasto / Desenvolvimento
+- Vinícius Almada dos Santos / Desenvolvimento
 
 Licença:
 
