@@ -11,6 +11,7 @@ Como Executar o Projeto:
 Clone este repositório em sua máquina local. Certifique-se de ter o JDK instalado. A aplicação foi desenvolvida usando o Java 19, mas versões posteriores devem funcionar corretamente.
 - Compile o código fonte: javac -d bin -sourcepath src src/com/seuprojeto/Main.java
 - Execute a aplicação: java -cp bin com.seuprojeto.Main
+
 Na interface gráfica que será exibida, insira o título ou autor de um livro na barra de pesquisa e clique em "Pesquisar". As informações do livro serão exibidas em seguida.
 
 Tecnologias Utilizadas:
